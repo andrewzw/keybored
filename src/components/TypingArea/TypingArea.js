@@ -1,12 +1,11 @@
 function TypingArea({ textToType, userInput, onUserInputChange, onKeyDown }) {
     const handleChange = (event) => {
-      // Pass the event object instead of value
       onUserInputChange(event);
     };
   
     return (
       <div className="typing-area">
-        <p>{textToType}</p>
+        <h2>{textToType}</h2>
         <input
           type="text"
           value={userInput}
