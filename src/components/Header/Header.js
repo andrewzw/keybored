@@ -5,8 +5,7 @@ function Header() {
   return (
     <header>
       <h1>Keybored</h1>
-      <img src={Keybored} alt="Logo" height={500}/>
-      {}
+      <img src={Keybored} alt="Logo" height={600}/>
     </header>
   );
 }
