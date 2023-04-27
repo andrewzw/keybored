@@ -55,8 +55,8 @@ function TypingArea() {
       <h2>{textToType}</h2>
       <h3>{compareText(textToType, userInput) ? '' : 'No match!'}
         {mismatchIndex === true
-          ? ` Match!`
-          : ` Missed word: '${mismatchIndex}`
+          ? ` Match! `
+          : ` Missed word: ${mismatchIndex}`
         }'
       </h3>
       <input
