@@ -4,6 +4,7 @@ import './typing_area.css';
 function TypingArea() {
   const [textToType, setTextToType] = useState('');
   const [userInput, setUserInput] = useState('');
+  const [typed, setTyped] = useState([]);
 
   const sampleTexts = [
     'The quick brown fox jumps over the lazy dog.',
@@ -12,9 +13,10 @@ function TypingArea() {
     // Add more sample texts here
   ];
 
-  const handleUserInputChange = (event) => {
-    setUserInput(event.target.value);
-  };
+  useEffect(() => {
+    const newText = sampleTexts[Math.floor(Math.random() * sampleTexts.length)];
+    setTextToType(newText);
+  }, []);
 
   const compareText = (textToType, userInput) => {
     const textToTypeArray = textToType.split(' ');
@@ -43,10 +45,16 @@ function TypingArea() {
   };
 
 
-  useEffect(() => {
-    const newText = sampleTexts[Math.floor(Math.random() * sampleTexts.length)];
-    setTextToType(newText);
-  }, []);
+
+
+  document.addEventListener("keydown", (event) => {
+    let pressed = event.key;
+    if (pressed.length == 1 && pressed.match(/[a-zA-z0-9]/i)) 
+      setUserInput(pressed);
+      typed.push(pressed);
+      console.log(typed);
+
+});
 
   const mismatchIndex = findMismatchIndex(textToType, userInput);
 
@@ -59,12 +67,8 @@ function TypingArea() {
           : ` Missed word: ${mismatchIndex}`
         }'
       </h3>
-      <input
-        type="text"
-        value={userInput}
-        onChange={handleUserInputChange}
-        placeholder="Start typing here..."
-      />
+      <h2>{userInput}</h2>
+      <p>{typed}</p>
     </div>
   );
 }
