@@ -1,10 +1,6 @@
-input[type=text] {
-    width: 100%;
-    margin: 1rem 0;
-    border: none;
-    font-size: large;
+
+  .typing-area > .user-input{
+
     text-align: center;
-    color: #decece;
-    background-color: #f1f1f100;
-    outline: none;
+    
   }
