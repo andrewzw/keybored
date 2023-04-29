@@ -4,7 +4,6 @@ import './typing_area.css';
 function TypingArea() {
   const [textToType, setTextToType] = useState('');
   const [userInput, setUserInput] = useState('');
-  const [typed, setTyped] = useState('');
 
   const sampleTexts = [
     'The quick brown fox jumps over the lazy dog.',
@@ -27,8 +26,9 @@ function TypingArea() {
       if (textToTypeArray[i] === userInputArray[i]) {
         matchCount++;
       }
-      else if(textToTypeArray[i] !== userInputArray[i]){
-        return textToTypeArray[i]; //return mismatched word
+      else if (textToTypeArray[i] !== userInputArray[i]) {
+        // return textToTypeArray[i]; //return mismatched word
+        return false;
       }
     }
 
@@ -39,14 +39,14 @@ function TypingArea() {
 
   const renderUserInput = () => {
     const inputChars = userInput.split('');
-  
+
     return [
       // Add the "<" character before mapping inputChars
       <span key={'start'}>{'<'}</span>,
       // Map inputChars to display the characters with the appropriate color
       ...inputChars.map((char, index) => {
         const isMatch = textToType.charAt(index) === char;
-        const charStyle = { color: isMatch ? 'green' : '#FFC300' };
+        const charStyle = { color: isMatch ? '#06d6a0' : '#ef476f' };
         return <span key={index} style={charStyle}>{char}</span>;
       }),
       // Add the cursor element
@@ -55,16 +55,16 @@ function TypingArea() {
 
     ];
   };
-  
-  
+
+
 
   useEffect(() => {
     const handleKeyPress = (event) => {
       let pressed = event.key;
-  
+
       setUserInput((prevInput) => {
         let newInput = prevInput;
-  
+
         if (pressed.length === 1 && pressed.match(/[a-zA-Z0-9,.]/i)) {
           newInput = prevInput + pressed;
         } else if (pressed === " " || pressed === "Spacebar") {
@@ -77,27 +77,27 @@ function TypingArea() {
             newInput = prevInput.slice(0, -1);
           }
         }
-  
+
         console.log(newInput);
         return newInput;
       });
     };
-  
+
     document.addEventListener("keydown", handleKeyPress);
-  
+
     // Cleanup: Remove event listener when the component unmounts
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
   }, []);
 
-  const mismatchIndex = compareText(textToType, userInput);
-
   return (
     <div className="typing-area">
       <h2>{textToType}</h2>
       <h2 className='user-input'>{renderUserInput()}</h2>
-      <p>{typed}</p>
+      <p style={compareText(textToType, userInput) ? { color: '#06d6a0' } : { color: '#ef476f' }}>
+        {compareText(textToType, userInput) ? 'Correct' : 'wrong'}
+      </p>
     </div>
   );
 }
