@@ -4,3 +4,51 @@
     text-align: center;
     
   }
+  
+  .user-input {
+    font-size: 1.5em;
+    font-family: monospace;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    width: 100%;
+    caret-color: black;
+  }
+  
+  .user-input::before {
+    content: attr(value);
+    pointer-events: none;
+    position: absolute;
+    color: green;
+  }
+  
+  .user-input::after {
+    content: attr(value);
+    pointer-events: none;
+    position: absolute;
+    color: rgb(15, 11, 11);
+    mix-blend-mode: difference;
+  }
+  
+
+
+   .cursor::before {
+    content: '_';
+    display: inline-block;
+    font-size: 1em;
+    margin: 0 0.2rem;
+    color: rgb(255, 255, 255);
+    animation: blink 1s steps(1) infinite;
+  }
+  
+  @keyframes blink {
+    0%,
+    50% {
+      opacity: 0.8;
+    }
+    51%,
+    100% {
+      opacity: 0;
+    }
+  } 
+  

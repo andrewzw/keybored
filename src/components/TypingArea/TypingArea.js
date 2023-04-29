@@ -38,17 +38,25 @@ function TypingArea() {
 
 
   const renderUserInput = () => {
-    const textToTypeArray = textToType.split('');
-    const userInputArray = userInput.split('');
+    const inputChars = userInput.split('');
+  
+    return [
+      // Add the "<" character before mapping inputChars
+      <span key={'start'}>{'<'}</span>,
+      // Map inputChars to display the characters with the appropriate color
+      ...inputChars.map((char, index) => {
+        const isMatch = textToType.charAt(index) === char;
+        const charStyle = { color: isMatch ? 'green' : '#FFC300' };
+        return <span key={index} style={charStyle}>{char}</span>;
+      }),
+      // Add the cursor element
+      <span key={inputChars.length} className="cursor"></span>,
+      <span key={'end'}>{'/>'}</span>,
 
-    return userInputArray.map((word, index) => {
-      const isMatch = textToTypeArray[index] === word;
-      const wordStyle = {
-        color: isMatch ? 'green' : 'red',
-      };
-      return <span key={index} style={wordStyle}>{word}</span>;
-    });
+    ];
   };
+  
+  
 
   useEffect(() => {
     const handleKeyPress = (event) => {
