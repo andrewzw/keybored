@@ -45,6 +45,7 @@ function TypingArea() {
       <span key={'start'}>{'<'}</span>,
       // Map inputChars to display the characters with the appropriate color
       ...inputChars.map((char, index) => {
+        // Check if the character matches the character at the same position in textToType
         const isMatch = textToType.charAt(index) === char;
         const charStyle = { color: isMatch ? '#06d6a0' : '#ef476f' };
         return <span key={index} style={charStyle}>{char}</span>;
@@ -56,6 +57,25 @@ function TypingArea() {
     ];
   };
 
+  const renderText = () => {
+    const textChar = textToType.split('');
+    const inputChars = userInput.split('');
+
+    return [
+      // Add the "<" character before mapping inputChars
+      <span key={'start'}>{'<'}</span>,
+      // Map inputChars to display the characters with the appropriate color
+      ...textChar.map((char, index) => {
+        // Check if the character matches the character at the same position in textToType
+        const isMatch = userInput.charAt(index) === char;
+        const charStyle = { color: isMatch ? '#06d6a0' : '#ef476f' };
+        return <span key={index} style={charStyle}>{char}</span>;
+      }),
+      // Add the cursor element
+      <span key={'end'}>{'/>'}</span>,
+
+    ];
+  };
 
 
   useEffect(() => {
@@ -94,6 +114,7 @@ function TypingArea() {
   return (
     <div className="typing-area">
       <h2>{textToType}</h2>
+      <h2 className='user-input'>{renderText()}</h2>
       <h2 className='user-input'>{renderUserInput()}</h2>
       <p style={compareText(textToType, userInput) ? { color: '#06d6a0' } : { color: '#ef476f' }}>
         {compareText(textToType, userInput) ? 'Correct' : 'wrong'}
