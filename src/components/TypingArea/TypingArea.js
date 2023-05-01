@@ -43,8 +43,10 @@ function TypingArea() {
     return [
       // Add the "<" character before mapping inputChars
       <span key={'start'}>{'<'}</span>,
+
       // Map inputChars to display the characters with the appropriate color
       ...inputChars.map((char, index) => {
+
         // Check if the character matches the character at the same position in textToType
         const isMatch = textToType.charAt(index) === char;
         const charStyle = { color: isMatch ? '#06d6a0' : '#ef476f' };
@@ -61,22 +63,39 @@ function TypingArea() {
     const textChar = textToType.split('');
     const inputChars = userInput.split('');
 
+
+    const textCharWithCursor = textChar.reduce((acc, char, index) => {
+      // acc is the accumulator that collects the JSX elements.
+      // char is the current character in the textChar array.
+      // index is the current index in the textChar array.
+
+      const isMatch = userInput.charAt(index) === char;
+      const charStyle = { color: isMatch ? '#06d6a0' : '#ef476f' };
+      
+      const textCharElement = (
+        <span key={`textChar-${index}`} style={charStyle}>{char}</span>
+      );
+
+      // If the index matches the userInput length, insert the cursor before the textChar element
+      if (index === inputChars.length) {
+        acc.push(<span key={`cursor-${index}`} className="cursor" />);
+      }
+
+      acc.push(textCharElement);
+      return acc;
+    }, []);
+
     return [
       // Add the "<" character before mapping inputChars
       <span key={'start'}>{'<'}</span>,
-      // Map inputChars to display the characters with the appropriate color
-      ...textChar.map((char, index) => {
-        // Check if the character matches the character at the same position in textToType
-        const isMatch = userInput.charAt(index) === char;
-        const charStyle = { color: isMatch ? '#06d6a0' : '#ef476f' };
-        return <span key={index} style={charStyle}>{char}</span>;
-      }),
-      // Add the cursor element
+      ...textCharWithCursor,
       <span key={'end'}>{'/>'}</span>,
-
     ];
   };
 
+
+
+  
 
   useEffect(() => {
     const handleKeyPress = (event) => {
@@ -98,7 +117,7 @@ function TypingArea() {
           }
         }
 
-        console.log(newInput);
+        //console.log(newInput);
         return newInput;
       });
     };
@@ -115,7 +134,7 @@ function TypingArea() {
     <div className="typing-area">
       <h2>{textToType}</h2>
       <h2 className='user-input'>{renderText()}</h2>
-      <h2 className='user-input'>{renderUserInput()}</h2>
+      {/* <h2 className='user-input'>{renderUserInput()}</h2> */}
       <p style={compareText(textToType, userInput) ? { color: '#06d6a0' } : { color: '#ef476f' }}>
         {compareText(textToType, userInput) ? 'Correct' : 'wrong'}
       </p>

@@ -1,8 +1,6 @@
 
   .typing-area > .user-input{
-
     text-align: center;
-    
   }
   
   .user-input {
@@ -29,14 +27,12 @@
     color: rgb(15, 11, 11);
     mix-blend-mode: difference;
   }
-  
 
-
-   .cursor::before {
-    content: '_';
+  .cursor::before {
+    content: '|';
     display: inline-block;
     font-size: 1em;
-    margin: 0 0.2rem;
+    margin: -0.3em;
     color: rgb(255, 255, 255);
     animation: blink 1s steps(1) infinite;
   }
